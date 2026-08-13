@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="printer_configuration_view_list" model="ir.ui.view">
+        <field name="name">printer.configuration.list</field>
+        <field name="model">printer.configuration</field>
+        <field name="arch" type="xml">
+            <list string="Printer Configurations">
+                <field name="name"/>
+                <field name="printer_name"/>
+                <field name="user_id" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="is_default"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="printer_configuration_view_form" model="ir.ui.view">
+        <field name="name">printer.configuration.form</field>
+        <field name="model">printer.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Printer Configuration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="printer_name"/>
+                            <field name="is_default"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="printer_configuration_view_search" model="ir.ui.view">
+        <field name="name">printer.configuration.search</field>
+        <field name="model">printer.configuration</field>
+        <field name="arch" type="xml">
+            <search string="Printer Configurations">
+                <field name="name"/>
+                <field name="printer_name"/>
+                <field name="user_id"/>
+                <filter string="My Printers" name="my_printers" domain="[('user_id', '=', uid)]"/>
+                <filter string="Company Defaults" name="company_defaults" domain="[('user_id', '=', False)]"/>
+                <filter string="Default Printers" name="default_printers" domain="[('is_default', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="printer_configuration_action" model="ir.actions.act_window">
+        <field name="name">Printer Configuration</field>
+        <field name="res_model">printer.configuration</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_my_printers': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure your default printer
+            </p>
+            <p>
+                Set up printer preferences per user or per company.
+                The default printer name is shown in the print preview dialog.
+            </p>
+        </field>
+    </record>
+</odoo>

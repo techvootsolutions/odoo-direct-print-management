@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_direct_print_root"
+        name="Direct Print"
+        parent="base.menu_administration"
+        sequence="95"
+        groups="tv_direct_print_management.group_pdf_preview"/>
+
+    <menuitem
+        id="menu_printer_configuration"
+        name="Printer Configuration"
+        parent="menu_direct_print_root"
+        action="printer_configuration_action"
+        groups="tv_direct_print_management.group_pdf_preview"
+        sequence="10"/>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="tv_direct_print_management.DirectPrintPreviewDialog">
+        <Dialog
+            title="dialogTitle"
+            size="'fs'"
+            footer="false"
+            contentClass="'o_direct_print_preview_dialog'"
+            bodyClass="'p-0'"
+            withBodyPadding="false">
+            <div class="o_direct_print_preview_container d-flex flex-column h-100">
+                <div class="o_direct_print_preview_toolbar d-flex align-items-center justify-content-between px-3 py-2 border-bottom bg-view">
+                    <div class="o_direct_print_printer_info text-muted">
+                        <i class="fa fa-print me-2" title="Default printer"/>
+                        <span class="fw-bold" t-esc="defaultPrinterLabel"/>
+                    </div>
+                    <div class="o_direct_print_preview_actions d-flex gap-2">
+                        <button type="button" class="btn btn-primary" t-on-click="triggerPrint">
+                            <i class="fa fa-print me-1"/>
+                            Print
+                        </button>
+                        <button type="button" class="btn btn-secondary" t-on-click="onDownload">
+                            <i class="fa fa-download me-1"/>
+                            Download PDF
+                        </button>
+                        <button type="button" class="btn btn-light" t-on-click="onClose">
+                            Close
+                        </button>
+                    </div>
+                </div>
+                <div class="o_direct_print_preview_frame flex-grow-1 position-relative">
+                    <div t-if="state.isLoading" class="o_direct_print_loading d-flex align-items-center justify-content-center">
+                        <i class="fa fa-spinner fa-spin fa-2x text-primary"/>
+                        <span class="ms-3 text-muted">Loading preview...</span>
+                    </div>
+                    <iframe
+                        t-ref="iframe"
+                        class="o_direct_print_iframe w-100 h-100 border-0"
+                        t-att-class="{ 'opacity-0': state.isLoading }"
+                        t-att-src="previewSrc"
+                        t-att-title="dialogTitle"
+                        t-on-load="onViewerLoad"/>
+                </div>
+            </div>
+        </Dialog>
+    </t>
+
+</templates>

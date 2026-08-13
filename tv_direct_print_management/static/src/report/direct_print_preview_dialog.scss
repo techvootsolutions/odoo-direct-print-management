@@ -1,0 +1,74 @@
+.o_direct_print_preview_dialog {
+    .modal-body {
+        height: calc(100vh - 8rem);
+        max-height: calc(100vh - 8rem);
+        // overflow:hidden was clipping the iframe in the browser's layout snapshot.
+        // auto keeps the scrollbar when needed but doesn't clip the paint layer.
+        overflow: auto;
+    }
+
+    .o_direct_print_preview_container {
+        min-height: calc(100vh - 10rem);
+    }
+
+    .o_direct_print_preview_frame {
+        min-height: 0;
+        background: var(--o-view-background-color, #f8f9fa);
+    }
+
+    .o_direct_print_loading {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: var(--o-view-background-color, #f8f9fa);
+    }
+
+    .o_direct_print_iframe {
+        min-height: calc(100vh - 12rem);
+        background: #fff;
+        transition: opacity 0.15s ease-in;
+
+        &.opacity-0 {
+            opacity: 0;
+        }
+    }
+}
+
+// ── Parent-page @media print rules ───────────────────────────────────────────
+// These only fire if Chrome somehow escalates to printing the parent Odoo page
+// rather than our isolated popup. With the new isolated-window strategy these
+// should never be needed, but they stay as a safety net.
+@media print {
+    body > *:not(.o_dialog) {
+        display: none !important;
+    }
+
+    .o_dialog,
+    .modal-backdrop {
+        position: static !important;
+        display: block !important;
+        overflow: visible !important;
+    }
+
+    .o_direct_print_preview_toolbar,
+    .o_direct_print_loading,
+    .modal-header,
+    .modal-footer {
+        display: none !important;
+    }
+
+    .o_direct_print_preview_dialog .modal-body {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    .o_direct_print_iframe {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        opacity: 1 !important;
+    }
+}

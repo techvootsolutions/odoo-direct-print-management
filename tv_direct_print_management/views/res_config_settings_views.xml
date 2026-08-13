@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_direct_print" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.direct.print</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Direct Print" name="tv_direct_print_management" groups="base.group_system">
+                    <block title="Print Preview">
+                        <setting string="Direct Print Preview" help="Open PDF reports in a browser print preview dialog instead of downloading them directly.">
+                            <field name="direct_print_enabled"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
